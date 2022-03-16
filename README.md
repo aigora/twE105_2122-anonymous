@@ -4,7 +4,10 @@
 
 ## Integrantes del equipo
 
-[Nombres, apellidos, y usuario GitHub de los integrantes del equipo.]
+Ángel Canosa 
+Juan Ignacio Viñuales 
+Fernando Zurera
+Javier Durán 
 
 ## Objetivos del trabajo
 
