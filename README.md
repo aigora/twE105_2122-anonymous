@@ -4,7 +4,7 @@
 
 ## Integrantes del equipo
 
-Ángel Canosa 
+Ángel Canosa .
 Juan Ignacio Viñuales 
 Fernando Zurera
 Javier Durán 
