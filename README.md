@@ -1,5 +1,5 @@
 # Título del trabajo
-#**Escapa como puedas**
+#**Escapa como puedas.**
 
 # Descripción del proyecto
 En este juego el jugador tendrá que investigar e ir descubriendo secretos con el fin de escapar antes de que se agote el tiempo pues de lo contrario tendrá un mal final.
