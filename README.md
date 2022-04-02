@@ -7,7 +7,7 @@
 Ángel Canosa .
 Juan Ignacio Viñuales 
 Fernando Zurera
-Javier Durán sainz
+Javier Durán 
 
 ## Objetivos del trabajo
 
