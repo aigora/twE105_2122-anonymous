@@ -1,16 +1,14 @@
-#**Escapa como puedas**
+# [Título del trabajo]
 
-En este juego el jugador tendrá que investigar e ir descubriendo secretos con el fin de escapar antes de que se agote el tiempo pues de lo contrario tendrá un mal final.
+[Descripción breve del proyecto a realizar (2-3 frases).]
 
 ## Integrantes del equipo
 
-#Ángel Canosa 
-#Juan Ignacio Viñuales 
-#Fernando Zurera
-#Javier Durán 
+Ángel Canosa .
+Juan Ignacio Viñuales 
+Fernando Zurera
+Javier Durán 
 
 ## Objetivos del trabajo
 
--Mediante la prgramación realizar un juego con buena jugabilidad que permita al jugador interactuar con el programa.
--Crear un juego que implemente la mecánica de generacion aleatoria de más o menos objetos que facilitarán la experiencia de juego dependienco de la dificultad seleccionada.
--Realizar un programa que suponga un reto al jugador y que nos permita implementar todos los conocimiento adquiridos en clase.
+[Lista de los objetivos que se persiguen con el trabajo propuesto.]
