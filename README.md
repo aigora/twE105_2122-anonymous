@@ -6,10 +6,10 @@ En este juego el jugador tendrá que investigar e ir descubriendo secretos con el
 
 ## Integrantes del equipo
 
-#Ángel Canosa 
-#Juan Ignacio Viñuales 
-#Fernando Zurera
-#Javier Durán 
+*Ángel Canosa 
+*Juan Ignacio Viñuales 
+*Fernando Zurera
+*Javier Durán 
 
 ## Objetivos del trabajo
 
