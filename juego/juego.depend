@@ -1,0 +1,8 @@
+# depslib dependency file v1.0
+1651835839 source:c:\users\ferni\onedrive\documentos\universidad\primer año\primer cuatriemestre\informatica\mio\juego\main.c
+	<stdio.h>
+	<stdlib.h>
+	<time.h>
+	<windows.h>
+	<locale.h>
+
