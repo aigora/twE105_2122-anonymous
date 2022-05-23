@@ -24,8 +24,8 @@ void mostrarmochila(objetos mochila);//L.133
 void mostrarherramientas(objetos mochila);//L.136
 void mapa();//L.143
 void salud_(int *salud2);//L.149
-objetos ir(objetos mochila);//L.154
-void bano();//L.189
+objetos ir(objetos mochila, int *salud);//L.154
+int bano(int salud);//L.189
 objetos carpinteria(objetos mochila);//L.212
 objetos crear(objetos mochila);//L.240
 objetos cajones(objetos cajon);
@@ -100,7 +100,7 @@ void juego(){
             observar(eleccion, mochila, salud);
             break;
         case 1:
-            mochila = ir(mochila);
+            mochila = ir(mochila, &salud);
             break;
         case 2:
             salir = 0;
@@ -109,6 +109,7 @@ void juego(){
 
     }
     printf("Saliendo...");
+
 }
 
 //Funciones de observar
@@ -152,9 +153,9 @@ void salud_(int *salud2){
 }
 
 //Funciones de ir
-objetos ir(objetos mochila){ // METER VARIABLES GLOBALES SALUD, VENTANAS, CAJONES COMO PUNTEROS
+objetos ir(objetos mochila, int *salud){ // METER VARIABLES GLOBALES SALUD, VENTANAS, CAJONES COMO PUNTEROS
     int eleccion;
-    printf("¿A donde quieres ir?");
+    printf("¿A donde quieres ir?\n");
     scanf("%i", &eleccion);
     switch(eleccion)
     {
@@ -165,8 +166,10 @@ objetos ir(objetos mochila){ // METER VARIABLES GLOBALES SALUD, VENTANAS, CAJONE
         break;
     case 2:
         printf("Estás en el baño.\nAquí puedes recuperar salud relajándote en las duchas.\n");
-        bano();
-        zombies(mochila,6);
+        int vida = bano(*salud);
+        *salud = *salud + vida;
+        //zombies(mochila,6);
+
         break;
     case 3:
         printf("Estás en la carpintería.\nAquí puedes fabricar distintos objetos.\n");
@@ -187,7 +190,7 @@ objetos ir(objetos mochila){ // METER VARIABLES GLOBALES SALUD, VENTANAS, CAJONE
 
 }
 
-void bano(int *salud){  //METER VARIABLES GLOBALES SALUD.
+int bano(int salud){  //METER VARIABLES GLOBALES SALUD.
     int eleccion, vida;
     printf("¿Quieres recuperar vida?\n(Ten en cuenta que cada punto de vida es un segundo de espera)\n[0]Sí [1]No\n");
     scanf("%i", &eleccion);
@@ -198,10 +201,12 @@ void bano(int *salud){  //METER VARIABLES GLOBALES SALUD.
         scanf("%i", &vida);
         for(int i = 0; i < vida; i++){
             system("cls");
-           // *salud++;
-            printf("Salud = %i\n", *(salud+i));
+            salud++;
+            printf("Salud = %i\n", salud);
             sleep(1);
         }
+
+        //printf("%i", *salud);
         break;
     case 1:
         break;
