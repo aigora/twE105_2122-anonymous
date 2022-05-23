@@ -96,7 +96,7 @@ void juego(){
         case 0:
             printf("que quieres observar?\n[0]Mochila [1]Herramientas [2]Mapa [3]salud\n");
             scanf("%i", &eleccion);
-            observar(eleccion, mochila,&salud);
+            observar(eleccion, mochila, salud);
             break;
         case 1:
             mochila = ir(mochila);
