@@ -16,6 +16,7 @@ typedef struct //Estructura con los diferentes objetos que puedes ir consiguiend
 int Nventanas[7]; //DENTRO DE LA FUNCIÓN IR Y DE ZOMBIES (METER COMO PUNTERO).
 int Ncajones[7]; //DENTRO DE CAJONES, DE IR Y DE
 int salud = 50;
+
 // DECLARACIÓN DE LAS FUNCIONES
 void juego();//L.74
 void observar(int eleccion, objetos mochila, int *salud1);//L.112
@@ -186,7 +187,7 @@ objetos ir(objetos mochila){ // METER VARIABLES GLOBALES SALUD, VENTANAS, CAJONE
 
 }
 
-void bano( ){  //METER VARIABLES GLOBALES SALUD.
+void bano(int *salud){  //METER VARIABLES GLOBALES SALUD.
     int eleccion, vida;
     printf("¿Quieres recuperar vida?\n(Ten en cuenta que cada punto de vida es un segundo de espera)\n[0]Sí [1]No\n");
     scanf("%i", &eleccion);
@@ -197,8 +198,8 @@ void bano( ){  //METER VARIABLES GLOBALES SALUD.
         scanf("%i", &vida);
         for(int i = 0; i < vida; i++){
             system("cls");
-            salud++;
-            printf("Salud = %i\n", salud);
+           // *salud++;
+            printf("Salud = %i\n", *(salud+i));
             sleep(1);
         }
         break;
