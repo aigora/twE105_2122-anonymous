@@ -24,7 +24,7 @@ void mostrarmochila(objetos mochila);//L.133
 void mostrarherramientas(objetos mochila);//L.136
 void mapa();//L.143
 void salud_(int *salud2);//L.149
-objetos ir(objetos mochila, int *salud);//L.154
+objetos ir(objetos mochila, int *salud, int *v);//L.154
 int bano(int salud);//L.189
 objetos carpinteria(objetos mochila);//L.212
 objetos crear(objetos mochila);//L.240
@@ -75,7 +75,8 @@ int main()
 }
 
 void juego(){
-    int Nventanas[3]; //Hay ventanas en la carpintería, baño y jardín.
+    int *v;
+    v = Nventanas[3]; //Hay ventanas en la carpintería, baño y jardín.
     int Ncajones[2]; //Hay cajones en el dormitorio y en la carpintería.
     int salud = 50;
     int eleccion, salir = 1;
@@ -101,7 +102,7 @@ void juego(){
             observar(eleccion, mochila, salud);
             break;
         case 1:
-            mochila = ir(mochila, &salud);
+            mochila = ir(mochila, &salud, v);
             break;
         case 2:
             salir = 0;
@@ -153,7 +154,7 @@ void salud_(int *salud2){
 }
 
 //Funciones de ir
-objetos ir(objetos mochila, int *salud3){ // METER VARIABLES GLOBALES VENTANAS, CAJONES COMO PUNTEROS
+objetos ir(objetos mochila, int *salud3, int *v3){ // METER VARIABLES GLOBALES VENTANAS, CAJONES COMO PUNTEROS
     int eleccion;
     printf("¿A donde quieres ir?\n");
     scanf("%i", &eleccion);
@@ -162,7 +163,7 @@ objetos ir(objetos mochila, int *salud3){ // METER VARIABLES GLOBALES VENTANAS, 
     case 1:
         printf("Estás en el jardín.\nTe encuentras delante de un ciprés de 100 años, puedes sacar madera para vallar las ventanas y que no salgan zombies.\n");
         //mochila = comedor(mochila, salud3);//cambiar funcion comedor (jardin)
-        zombies(mochila,1, salud3);
+        zombies(mochila,1, salud3, v1);
         break;
     case 2:
         printf("Estás en el baño.\nAquí puedes recuperar salud relajándote en las duchas.\n");
@@ -174,7 +175,7 @@ objetos ir(objetos mochila, int *salud3){ // METER VARIABLES GLOBALES VENTANAS, 
     case 3:
         printf("Estás en la carpintería.\nAquí puedes fabricar distintos objetos.\n");
         mochila = carpinteria(mochila);
-        zombies(mochila,3, salud3);
+        zombies(mochila,3, salud3, v);
         break;
     case 4:
         printf("Estás en el dormitorio.\nAquí reapareces cuando mueres\n");
@@ -216,8 +217,9 @@ int bano(int salud){  //METER VARIABLES GLOBALES SALUD.
 }
 
 objetos carpinteria(objetos mochila){ // METER VARIABLES GLOBALES VENTANAS Y CAJONES.
-    int eleccion;
-    printf("Hay %i ventanas y %i cajones\n", Nventanas[2], Ncajones[2]);
+    int eleccion, *v;
+    v = &Nventanas[2];
+    printf("Hay %i ventanas y %i cajones\n", *v, Ncajones[2]);
     printf("¿Qué quieres hacer?\n[0]Crear herrramientas [1]Tapar ventanas [2]Abrir cajones");
 
     scanf("%i", &eleccion);
@@ -226,7 +228,7 @@ objetos carpinteria(objetos mochila){ // METER VARIABLES GLOBALES VENTANAS Y CAJ
     case 0:
         mochila = crear(mochila);
         break;
-    case 1:
+    case 1:                                    //HACER.
         break;
     case 2:
         if(Ncajones[2] > 0){
@@ -448,20 +450,20 @@ objetos cofre(objetos mochila)//cambiar para que te de un numero de la clave.
 
 void ventanaycajones(){  // METER VARIABLES GLOBALES VENTANAS Y CAJONES COMO PUNTEROS
                       //QUITAR QUE EL BAÑO TENGA VENTANAS Y CAJONES.
-    for(int i = 0; i < 7; i++)
+    for(int i = 0; i < 3; i++)
     {
-        if(i == 2)
+        if(i == 1)
         {
-            Nventanas[i] = rand() % (4) + 1;  //CAMBIAR VECTORES A PUNTEROS
+            *(Nventanas[i]) = rand() % (4) + 1;  //CAMBIAR VECTORES A PUNTEROS
             Ncajones[i] = rand() % (4) + 1;
         }
-        else if(i == 5)
+        else if(i == 2)
         {
-            Nventanas[i] = rand() % (2) + 1;
+            *(Nventanas[i]) = rand() % (2) + 1;
             Ncajones[i] = rand() % (4) + 1;
         }
         else{
-            Nventanas[i] = rand() % (3) + 1;
+            *(Nventanas[i]) = rand() % (3) + 1;
             Ncajones[i] = rand() % (3) + 1;
         }
     }
@@ -508,10 +510,11 @@ void ventanaycajones(){  // METER VARIABLES GLOBALES VENTANAS Y CAJONES COMO PUN
     return (objetos) {mochila.palo, mochila.cinta, mochila.cristal, mochila.chocolate, mochila.piedra, mochila.hacha, mochila.cuchillo, mochila.martillo};;
     }*/
 
-void zombies(objetos mochila,int i, int *salud5) // METER VENTANAS Y SALUD.
+void zombies(objetos mochila,int i, int *salud5, int *v2) // METER VENTANAS Y SALUD.
 {
+    v2 = &Nventanas[i];
     int vidazombie = rand() % (51) + 50 ;
-    if(Nventanas[i] > 0)
+    if(*v2 > 0)
     {
         int r = rand() % 1;
     if(r == 0){
