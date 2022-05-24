@@ -529,11 +529,13 @@ void zombies(objetos mochila,int i, int *salud5) // METER VENTANAS Y SALUD.
             case 0:
                 if(mochila.cuchillo == 1){
                 vidazombie -= 30;
+
                 *salud5 -= rand() % (10) + 5;
                 if(vidazombie <= 0){
                     huir = 0;
                     break;
                 }
+                *salud5 -= 5;
                 printf("Ahora tienes %i puntos de salud y el zombie %i\n", *salud5, vidazombie);
                 }
                 else{
