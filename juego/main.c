@@ -15,7 +15,7 @@ typedef struct //Estructura con los diferentes objetos que puedes ir consiguiend
 //PONER COMO PUNTEROS DENTRO DE LAS FUNCIONES.
 int Nventanas[7]; //DENTRO DE LA FUNCIÓN IR Y DE ZOMBIES (METER COMO PUNTERO).
 int Ncajones[7]; //DENTRO DE CAJONES, DE IR Y DE
-int salud = 50;
+//int salud = 50;
 
 // DECLARACIÓN DE LAS FUNCIONES
 void juego();//L.74
@@ -31,14 +31,15 @@ objetos crear(objetos mochila);//L.240
 objetos cajones(objetos cajon);
 objetos agarrar(objetos mochila);
 objetos cofre(objetos mochila);
-objetos comedor(objetos mochila);
-void zombies(objetos mochila,int i);
+//objetos comedor(objetos mochila, int *salud4);
+void zombies(objetos mochila,int i, int *salud5);
 
 
 void ventanaycajones();
 
 int main()
 {
+    system("color 02");
     srand(time(0));
     ventanaycajones();
     setlocale (LC_CTYPE,"spanish");  //PONER EL TEXTO EN ESPAÑOL.
@@ -79,18 +80,18 @@ void juego(){
     int salud = 50;
     int eleccion, salir = 1;
     objetos mochila;
-    mochila.palo = 0;
-    mochila.cinta = 0;
-    mochila.cristal = 0;
+    mochila.palo = 5;
+    mochila.cinta = 5;
+    mochila.cristal = 5;
     mochila.chocolate = 0;
-    mochila.piedra = 0;
+    mochila.piedra = 5;
     mochila.hacha = 0;
     mochila.cuchillo = 0;
     mochila.martillo = 0;
     mochila.llaves = 0;
     while(salir == 1)
     {
-        printf("que quieres hacer?\n[0]Observar [1]Ir [2]Salir\n");
+        printf("¿Qué quieres hacer?\n[0]Observar [1]Ir [2]Salir\n");
         scanf("%i", &eleccion);
         switch(eleccion)
         {
@@ -138,7 +139,6 @@ void mostrarmochila(objetos mochila){
 }
 
 void mostrarherramientas(objetos mochila){
-
     printf("hacha = %i, cuchillo = %i\n", mochila.hacha, mochila.cuchillo);
 
 }
@@ -153,7 +153,7 @@ void salud_(int *salud2){
 }
 
 //Funciones de ir
-objetos ir(objetos mochila, int *salud){ // METER VARIABLES GLOBALES SALUD, VENTANAS, CAJONES COMO PUNTEROS
+objetos ir(objetos mochila, int *salud3){ // METER VARIABLES GLOBALES VENTANAS, CAJONES COMO PUNTEROS
     int eleccion;
     printf("¿A donde quieres ir?\n");
     scanf("%i", &eleccion);
@@ -161,20 +161,20 @@ objetos ir(objetos mochila, int *salud){ // METER VARIABLES GLOBALES SALUD, VENT
     {
     case 1:
         printf("Estás en el jardín.\nTe encuentras delante de un ciprés de 100 años, puedes sacar madera para vallar las ventanas y que no salgan zombies.\n");
-        mochila = comedor(mochila);//cambiar funcion comedor (jardin)
-        zombies(mochila,1);
+        //mochila = comedor(mochila, salud3);//cambiar funcion comedor (jardin)
+        zombies(mochila,1, salud3);
         break;
     case 2:
         printf("Estás en el baño.\nAquí puedes recuperar salud relajándote en las duchas.\n");
-        int vida = bano(*salud);
-        *salud = *salud + vida;
-        //zombies(mochila,6);
+        int vida = bano(*salud3);
+        *salud3 = *salud3 + vida;
+        zombies(mochila,6, salud3);
 
         break;
     case 3:
         printf("Estás en la carpintería.\nAquí puedes fabricar distintos objetos.\n");
         mochila = carpinteria(mochila);
-        zombies(mochila,3);
+        zombies(mochila,3, salud3);
         break;
     case 4:
         printf("Estás en el dormitorio.\nAquí reapareces cuando mueres\n");
@@ -182,7 +182,7 @@ objetos ir(objetos mochila, int *salud){ // METER VARIABLES GLOBALES SALUD, VENT
         break;
     case 5:
         printf("Ahí esta la salida. Investiga como puedes llegar hasta ahí y abrir la puerta\n");
-        zombies(mochila,8);
+        zombies(mochila,8, salud3);
         break;
     }
     return (objetos) {mochila.palo, mochila.cinta, mochila.cristal, mochila.chocolate, mochila.piedra, mochila.hacha, mochila.cuchillo, mochila.martillo};
@@ -217,7 +217,7 @@ int bano(int salud){  //METER VARIABLES GLOBALES SALUD.
 
 objetos carpinteria(objetos mochila){ // METER VARIABLES GLOBALES VENTANAS Y CAJONES.
     int eleccion;
-    printf("Hay %i ventanas y %i cajones", Nventanas[2], Ncajones[2]);
+    printf("Hay %i ventanas y %i cajones\n", Nventanas[2], Ncajones[2]);
     printf("¿Qué quieres hacer?\n[0]Crear herrramientas [1]Tapar ventanas [2]Abrir cajones");
 
     scanf("%i", &eleccion);
@@ -244,7 +244,7 @@ objetos carpinteria(objetos mochila){ // METER VARIABLES GLOBALES VENTANAS Y CAJ
 
 objetos crear(objetos mochila){ //USADA DENTRO DE CARPINTERÍA PARA HACER LAS HERRAMINETAS.
     int eleccion, x = 5, creacion = 0;
-    printf("que quieres crear?\n[0]hacha [1]cuchillo [2]martillo\n");
+    printf("¿Qué quieres crear?\n[0]hacha [1]cuchillo [2]martillo\n");
     scanf("%i", &eleccion);
     switch(eleccion){
     case 0:
@@ -468,7 +468,7 @@ void ventanaycajones(){  // METER VARIABLES GLOBALES VENTANAS Y CAJONES COMO PUN
 
 }
 
-objetos comedor(objetos mochila){   //METER VARIABLES GLOBALES VENTANAS Y CAJONES.
+/*objetos comedor(objetos mochila,int *salud4){   //METER VARIABLES GLOBALES VENTANAS Y CAJONES. Cambiar por jardín.
     int eleccion;
     printf("Hay %i ventanas y %i cajones", Nventanas[0], Ncajones[0]);
     printf("¿Qué quieres hacer?\n[0]Comer [1]Tapar ventanas [2]Abrir cajones\n");
@@ -476,16 +476,16 @@ objetos comedor(objetos mochila){   //METER VARIABLES GLOBALES VENTANAS Y CAJONE
     switch(eleccion)
     {
     case 0:
-        if(salud < 100 && mochila.chocolate > 0){
+        if(*salud4 < 100 && mochila.chocolate > 0){
             printf("¿Quieres consumir una chocolatina?\n[0]Sí [1]No\n");
             scanf("%i", &eleccion);
             if(eleccion == 0){
                 mochila.chocolate--;
-                salud += 25;
-                if(salud > 100)
-                    salud = 100;
+                *salud4 += 25;
+                if(*salud4 > 100)
+                    *salud4 = 100;
             }
-            printf("%i", salud);
+            printf("%i", *salud4);
 
         }
         else{
@@ -506,16 +506,16 @@ objetos comedor(objetos mochila){   //METER VARIABLES GLOBALES VENTANAS Y CAJONE
     }
 
     return (objetos) {mochila.palo, mochila.cinta, mochila.cristal, mochila.chocolate, mochila.piedra, mochila.hacha, mochila.cuchillo, mochila.martillo};;
-    }
+    }*/
 
-void zombies(objetos mochila,int i) // METER VENTANAS Y SALUD.
+void zombies(objetos mochila,int i, int *salud5) // METER VENTANAS Y SALUD.
 {
     int vidazombie = rand() % (51) + 50 ;
     if(Nventanas[i] > 0)
     {
-        int r = rand() % 4;
+        int r = rand() % 1;
     if(r == 0){
-        printf("¡CUIDADO! Ha aparecido un zombie delante tuya con %i de vida.\n¿Que quieres hacer?\n", vidazombie);
+        printf("¡CUIDADO! Ha aparecido un zombie delante de ti con %i de vida.\n¿Qué quieres hacer?\n", vidazombie);
         int eleccion;
         int huir = 1;
         while(huir == 1){
@@ -524,14 +524,17 @@ void zombies(objetos mochila,int i) // METER VENTANAS Y SALUD.
         switch(eleccion)
         {
         case 0:
-            printf("¿Con que quieres atacar?\n[0]Cuchillo\n");
             switch(eleccion)
             {
             case 0:
                 if(mochila.cuchillo == 1){
                 vidazombie -= 30;
-                salud -= 5;
-                printf("Ahora tienes %i puntos de salud y el zombie %i\n", salud, vidazombie);
+                *salud5 -= rand() % (10) + 5;
+                if(vidazombie <= 0){
+                    huir = 0;
+                    break;
+                }
+                printf("Ahora tienes %i puntos de salud y el zombie %i\n", *salud5, vidazombie);
                 }
                 else{
                 printf("No tienes cuchillo\n");
@@ -548,11 +551,13 @@ void zombies(objetos mochila,int i) // METER VENTANAS Y SALUD.
             break;
 
         }
+
         }
-        printf("Perfecto, has matado al zombie y has escapado");
+        printf("Perfecto, has matado al zombie y has escapado.\n\n");
+        sleep(5);
+        system("cls");
     }
 
     }
 
 }
-
