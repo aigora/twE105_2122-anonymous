@@ -95,6 +95,7 @@ int main()
     printf("ESCAPA COMO PUEDAS\n Bienvenido al juego, ¿Qué deseas hacer?\n");
     printf(" [1]JUGAR\n [2]OPCIONES\n [3]SALIR\n");
     scanf("%i", &menu);
+    system("cls");
 
     switch(menu){
     case 1:
@@ -137,8 +138,9 @@ void juego(){
         switch(eleccion)
         {
         case 0:
-            printf("que quieres observar?\n[0]Mochila [1]Herramientas [2]Mapa [3]salud\n");
+            printf("¿Qué quieres observar?\n[0]Mochila [1]Herramientas [2]Mapa [3]salud\n");
             scanf("%i", &eleccion);
+            system("cls");
             observar(eleccion, mochila, salud);
             break;
         case 1:
@@ -151,9 +153,9 @@ void juego(){
 
             break;
         }
-        /*int i;
+        int i;
         tresenraya(&i);
-        printf("%i\n", i);*/
+        printf("%i\n", i);
 
     }
     printf("Saliendo...");
@@ -186,12 +188,12 @@ void mostrarmochila(objetos mochila){
 }
 
 void mostrarherramientas(objetos mochila){
-    printf("hacha = %i, cuchillo = %i\n", mochila.hacha, mochila.cuchillo, mochila.martillo);
+    printf("Hacha = %i\nCuchillo = %i\n", mochila.hacha, mochila.cuchillo);
 
 }
 
 void mapa(){
-    printf("            ___            ___ \n    | |____| 1 |__________|   |          1-Jardín\n    |  _   ______   ______  5 |          2-Baño\n    | |_| |  ___ | |      |___|          3-Carpintería\n    |  ___| |   || |______               4-Dormitorio\n ___| |_____| 4 ||        |              5-Salida\n|  2   _________||    3   |    \n|_____|          |________|    \n\n\n");
+     printf("\n               MAPA\n\n            ___            ___ \n    | |____| 1 |__________|   |          1-Jardín\n    |  _   ______   ______  5 |          2-Baño\n    | |_| |  ___ | |      |___|          3-Carpintería\n    |  ___| |   || |______               4-Dormitorio\n ___| |_____| 4 ||        |              5-Salida\n|  2   _________||    3   |    \n|_____|          |________|    \n\n\n");
 
 }
 
@@ -204,7 +206,9 @@ objetos ir(objetos mochila, int *salud3, int i){ // METER VARIABLES GLOBALES VEN
     int eleccion;
     if(i != 1){
     printf("¿A donde quieres ir?\n");
+     mapa();
     scanf("%i", &eleccion);
+    system("cls");
     }
     else if(i == 1){
         eleccion = 4;
@@ -212,7 +216,7 @@ objetos ir(objetos mochila, int *salud3, int i){ // METER VARIABLES GLOBALES VEN
     switch(eleccion)
     {
     case 1:
-        printf("Estás en el jardín.\nTe encuentras delante de un ciprés de 100 años, puedes conseguir madera para arreglar las vallas rotas y que no entren zombies.\n");
+        printf("Estás en el jardín.\nTe encuentras delante de un ciprés de 100 años, puedes conseguir madera para arreglar las vallas rotas \n y que no entren zombies.\n");
         mochila = jardin(mochila, salud3);//cambiar funcion comedor (jardin)
         zombies(mochila,1, salud3);
         break;
@@ -249,6 +253,7 @@ objetos jardin(objetos mochila, int *salud4){   //METER VARIABLES GLOBALES VENTA
     switch(eleccion)
     {
     case 0:
+        system("cls");
         if(*salud4 < 100 && mochila.chocolate > 0){
             printf("¿Quieres consumir una chocolatina?\n[0]Sí [1]No\n");
             scanf("%i", &eleccion);
@@ -267,6 +272,7 @@ objetos jardin(objetos mochila, int *salud4){   //METER VARIABLES GLOBALES VENTA
         break;
 
         case 1:
+            system("cls");
         if(ventanasjardin > 0){
             if(mochila.palo > 2 && mochila.martillo == 1){
             ventanasjardin--;
@@ -289,10 +295,11 @@ objetos jardin(objetos mochila, int *salud4){   //METER VARIABLES GLOBALES VENTA
         }
         break;
     case 2:
+        system("cls");
        srand(time(NULL));
        n=rand()% 100+1;
 
-       printf("Adivina el número del 1 al 100.\n");
+      printf("Para conseguir madera tienes que adivinar un número del 1 al 100.\n");
        scanf("%d",&num);
        do {
         if(n>num){
@@ -303,15 +310,8 @@ objetos jardin(objetos mochila, int *salud4){   //METER VARIABLES GLOBALES VENTA
                     scanf("%d",&num);}}
         while(n!=num);
         mochila.palo += 3;
-        printf("Has conseguido 3 de madera, ahora tienes %i.\n", mochila.palo);
-        //MINIJUEGO DE ADIVINAR LOS NÚMEROS.
-       /* if(Ncajones[0] > 0){
-        mochila = agarrar(mochila);
-        Ncajones[0]--;
-        }
-        else{
-            printf("No quedan cajones para abrir");
-        }*/
+        printf("Has conseguido 3 tablones de madera, ahora tienes %i.\n", mochila.palo);
+
         break;
     }
     mochila = zombies(mochila, ventanasjardin, &*salud4);
@@ -492,7 +492,7 @@ objetos agarrar(objetos mochila)//segurmante se quite
     cajon = cajones(mochila);
     int coger;
     printf("los objetos que hay en el cajon son: palos = (%i), cintas = (%i), cristales = (%i), chocolate = (%i), piedras = (%i)\n", cajon.palo, cajon.cinta, cajon.cristal, cajon.chocolate, cajon.piedra);
-    printf("los quieres coger o dejar?\ncoger todo[0] coger por eleccion[1]\n");
+    printf("Los quieres coger o dejar?\nCoger todo[0] Coger por elección[1]\n");
     jump:
     scanf("%i", &coger);
     if(coger == 0)
@@ -508,7 +508,7 @@ objetos agarrar(objetos mochila)//segurmante se quite
     {
         int dejar;
         int algomas;
-        printf("que objetos quieres coger?(elija de uno en uno)\n[0]palo [1]cinta [2]cristal [3]chocolate [4]piedra\n");
+        printf("¿Qué objetos quieres coger? (Elija de uno en uno.)\n[0]Palo [1]Cinta [2]Cristal [3]Chocolate [4]Piedra\n");
         scanf("%i", &dejar);
         switch(dejar)
         {
@@ -535,14 +535,15 @@ objetos agarrar(objetos mochila)//segurmante se quite
 
 
         }
-        printf("algo mas?\n[0]si [1]no\n");
+       printf("¿Algo más?\n[0]Sí [1]No\n");
         scanf("%i", &algomas);
         if(algomas == 0){
             goto jump;//arreglar
         }
         else if(algomas == 1)
         {
-            printf("okey");
+            system("cls");
+            printf("Okey ");
         }
 
 
