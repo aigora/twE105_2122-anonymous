@@ -24,24 +24,24 @@ void mostrarmochila(objetos mochila);//L.133
 void mostrarherramientas(objetos mochila);//L.136
 void mapa();//L.143
 void salud_(int *salud2);//L.149
-objetos ir(objetos mochila, int *salud, int *v);//L.154
+objetos ir(objetos mochila, int *salud);//L.154
 int bano(int salud);//L.189
 objetos carpinteria(objetos mochila);//L.212
 objetos crear(objetos mochila);//L.240
 objetos cajones(objetos cajon);
 objetos agarrar(objetos mochila);
 objetos cofre(objetos mochila);
-//objetos comedor(objetos mochila, int *salud4);
+objetos jardin(objetos mochila, int *salud4);
 void zombies(objetos mochila,int i, int *salud5);
 
 
-void ventanaycajones();
+//void ventanaycajones();
 
 int main()
 {
     system("color 02");
     srand(time(0));
-    ventanaycajones();
+    //ventanaycajones();
     setlocale (LC_CTYPE,"spanish");  //PONER EL TEXTO EN ESPAÑOL.
 
     int x = 0;
@@ -75,8 +75,7 @@ int main()
 }
 
 void juego(){
-    int *v;
-    v = Nventanas[3]; //Hay ventanas en la carpintería, baño y jardín.
+    int Nventanas[3]; //Hay ventanas en la carpintería, baño y jardín.
     int Ncajones[2]; //Hay cajones en el dormitorio y en la carpintería.
     int salud = 50;
     int eleccion, salir = 1;
@@ -84,7 +83,7 @@ void juego(){
     mochila.palo = 5;
     mochila.cinta = 5;
     mochila.cristal = 5;
-    mochila.chocolate = 0;
+    mochila.chocolate = 5;
     mochila.piedra = 5;
     mochila.hacha = 0;
     mochila.cuchillo = 0;
@@ -102,7 +101,7 @@ void juego(){
             observar(eleccion, mochila, salud);
             break;
         case 1:
-            mochila = ir(mochila, &salud, v);
+            mochila = ir(mochila, &salud);
             break;
         case 2:
             salir = 0;
@@ -154,16 +153,16 @@ void salud_(int *salud2){
 }
 
 //Funciones de ir
-objetos ir(objetos mochila, int *salud3, int *v3){ // METER VARIABLES GLOBALES VENTANAS, CAJONES COMO PUNTEROS
+objetos ir(objetos mochila, int *salud3){ // METER VARIABLES GLOBALES VENTANAS, CAJONES COMO PUNTEROS
     int eleccion;
     printf("¿A donde quieres ir?\n");
     scanf("%i", &eleccion);
     switch(eleccion)
     {
     case 1:
-        printf("Estás en el jardín.\nTe encuentras delante de un ciprés de 100 años, puedes sacar madera para vallar las ventanas y que no salgan zombies.\n");
-        //mochila = comedor(mochila, salud3);//cambiar funcion comedor (jardin)
-        zombies(mochila,1, salud3, v1);
+        printf("Estás en el jardín.\nTe encuentras delante de un ciprés de 100 años, puedes conseguir madera para arreglar las vallas rotas y que no entren zombies.\n");
+        mochila = jardin(mochila, salud3);//cambiar funcion comedor (jardin)
+        zombies(mochila,1, salud3);
         break;
     case 2:
         printf("Estás en el baño.\nAquí puedes recuperar salud relajándote en las duchas.\n");
@@ -175,7 +174,7 @@ objetos ir(objetos mochila, int *salud3, int *v3){ // METER VARIABLES GLOBALES V
     case 3:
         printf("Estás en la carpintería.\nAquí puedes fabricar distintos objetos.\n");
         mochila = carpinteria(mochila);
-        zombies(mochila,3, salud3, v);
+        zombies(mochila,3, salud3);
         break;
     case 4:
         printf("Estás en el dormitorio.\nAquí reapareces cuando mueres\n");
@@ -190,8 +189,86 @@ objetos ir(objetos mochila, int *salud3, int *v3){ // METER VARIABLES GLOBALES V
 
 
 }
+objetos jardin(objetos mochila, int *salud4){   //METER VARIABLES GLOBALES VENTANAS Y CAJONES. Cambiar por jardín.
+    int ventanasjardin, eleccion, n, num;
+    ventanasjardin = rand() % (2) +1;
+    printf("Hay %i vallas rotas. ", ventanasjardin);
+    printf("¿Qué quieres hacer?\n[0]Comer [1]Arreglar vallas [2]Conseguir madera\n");
+    scanf("%i", &eleccion);
+    switch(eleccion)
+    {
+    case 0:
+        if(*salud4 < 100 && mochila.chocolate > 0){
+            printf("¿Quieres consumir una chocolatina?\n[0]Sí [1]No\n");
+            scanf("%i", &eleccion);
+            if(eleccion == 0){
+                mochila.chocolate--;
+                *salud4 += 25;
+                if(*salud4 > 100)
+                    *salud4 = 100;
+            }
+            printf("Tienes %i de salud.", *salud4);
 
-int bano(int salud){  //METER VARIABLES GLOBALES SALUD.
+        }
+        else{
+            printf("Tu salud está al maximo o no tienes suficiente alimento\n");
+        }
+        break;
+
+        case 1:
+        if(ventanasjardin > 0){
+            if(mochila.palo > 2 && mochila.martillo == 1){
+            ventanasjardin--;
+            printf("Has arreglado la valla, ahora quedan %i vallas rotas.\n", ventanasjardin);
+            }
+            else {
+        int maderanecesaria = 3 - mochila.palo;
+        if(maderanecesaria < 0)
+            maderanecesaria = 0;
+
+        printf("No tinenes materiales suficientes, te falta %i de madera", maderanecesaria);
+        if(mochila.martillo < 1){
+            printf(" y un martillo");
+        }
+        printf(".\n");
+            }
+        }
+        else{
+            printf("No quedan vallas rotas que arreglar.\n");
+        }
+        break;
+    case 2:
+       srand(time(NULL));
+       n=rand()% 100+1;
+
+       printf("Adivina el número del 1 al 100.\n");
+       scanf("%d",&num);
+       do {
+        if(n>num){
+           printf("Mas alto\n");
+           scanf("%d",&num);}
+           else if (n<num){
+                    printf("Mas bajo\n");
+                    scanf("%d",&num);}}
+        while(n!=num);
+        mochila.palo += 3;
+        printf("Has conseguido 3 de madera, ahora tienes %i.\n", mochila.palo);
+        //MINIJUEGO DE ADIVINAR LOS NÚMEROS.
+       /* if(Ncajones[0] > 0){
+        mochila = agarrar(mochila);
+        Ncajones[0]--;
+        }
+        else{
+            printf("No quedan cajones para abrir");
+        }*/
+        break;
+    }
+
+    return (objetos) {mochila.palo, mochila.cinta, mochila.cristal, mochila.chocolate, mochila.piedra, mochila.hacha, mochila.cuchillo, mochila.martillo};;
+    }
+
+
+int bano(int salud){
     int eleccion, vida;
     printf("¿Quieres recuperar vida?\n(Ten en cuenta que cada punto de vida es un segundo de espera)\n[0]Sí [1]No\n");
     scanf("%i", &eleccion);
@@ -206,20 +283,17 @@ int bano(int salud){  //METER VARIABLES GLOBALES SALUD.
             printf("Salud = %i\n", salud);
             sleep(1);
         }
-
-        //printf("%i", *salud);
         break;
     case 1:
         break;
     }
-
-
 }
 
 objetos carpinteria(objetos mochila){ // METER VARIABLES GLOBALES VENTANAS Y CAJONES.
-    int eleccion, *v;
-    v = &Nventanas[2];
-    printf("Hay %i ventanas y %i cajones\n", *v, Ncajones[2]);
+    int cajonescarpinteria, ventanascarpinteria, eleccion;
+    ventanascarpinteria = rand() % (2) +1;
+    cajonescarpinteria = rand() % (2) + 1;
+    printf("Hay %i ventanas y %i cajones\n", ventanascarpinteria, cajonescarpinteria);
     printf("¿Qué quieres hacer?\n[0]Crear herrramientas [1]Tapar ventanas [2]Abrir cajones");
 
     scanf("%i", &eleccion);
@@ -228,12 +302,32 @@ objetos carpinteria(objetos mochila){ // METER VARIABLES GLOBALES VENTANAS Y CAJ
     case 0:
         mochila = crear(mochila);
         break;
-    case 1:                                    //HACER.
+    case 1:
+        if(ventanascarpinteria > 0){
+            if(mochila.palo > 2 && mochila.martillo == 1){
+            ventanascarpinteria--;
+            printf("Has vallado la ventana, ahora quedan %i ventanas.\n", ventanascarpinteria);
+            }
+            else {
+        int maderanecesaria = 3 - mochila.palo;
+        if(maderanecesaria < 0)
+            maderanecesaria = 0;
+
+        printf("No tinenes materiales suficientes, te falta %i de madera", maderanecesaria);
+        if(mochila.martillo < 1){
+            printf(" y un martillo");
+        }
+        printf(".\n");
+            }
+        }
+        else{
+            printf("No quedan ventanas que vallar.\n");
+        }
         break;
     case 2:
-        if(Ncajones[2] > 0){
+        if(cajonescarpinteria > 0){
         mochila = agarrar(mochila);
-        Ncajones[2]--;
+        cajonescarpinteria--;
         }
         else{
             printf("No quedan cajones para abrir");
@@ -448,73 +542,33 @@ objetos cofre(objetos mochila)//cambiar para que te de un numero de la clave.
 
 }
 
-void ventanaycajones(){  // METER VARIABLES GLOBALES VENTANAS Y CAJONES COMO PUNTEROS
+/*void ventanaycajones(){  // METER VARIABLES GLOBALES VENTANAS Y CAJONES COMO PUNTEROS
                       //QUITAR QUE EL BAÑO TENGA VENTANAS Y CAJONES.
-    for(int i = 0; i < 3; i++)
+    for(int i = 0; i < 7; i++)
     {
-        if(i == 1)
+        if(i == 2)
         {
-            *(Nventanas[i]) = rand() % (4) + 1;  //CAMBIAR VECTORES A PUNTEROS
+            Nventanas[i] = rand() % (4) + 1;  //CAMBIAR VECTORES A PUNTEROS
             Ncajones[i] = rand() % (4) + 1;
         }
-        else if(i == 2)
+        else if(i == 5)
         {
-            *(Nventanas[i]) = rand() % (2) + 1;
+            Nventanas[i] = rand() % (2) + 1;
             Ncajones[i] = rand() % (4) + 1;
         }
         else{
-            *(Nventanas[i]) = rand() % (3) + 1;
+            Nventanas[i] = rand() % (3) + 1;
             Ncajones[i] = rand() % (3) + 1;
         }
     }
 
-}
+}*/
 
-/*objetos comedor(objetos mochila,int *salud4){   //METER VARIABLES GLOBALES VENTANAS Y CAJONES. Cambiar por jardín.
-    int eleccion;
-    printf("Hay %i ventanas y %i cajones", Nventanas[0], Ncajones[0]);
-    printf("¿Qué quieres hacer?\n[0]Comer [1]Tapar ventanas [2]Abrir cajones\n");
-    scanf("%i", &eleccion);
-    switch(eleccion)
-    {
-    case 0:
-        if(*salud4 < 100 && mochila.chocolate > 0){
-            printf("¿Quieres consumir una chocolatina?\n[0]Sí [1]No\n");
-            scanf("%i", &eleccion);
-            if(eleccion == 0){
-                mochila.chocolate--;
-                *salud4 += 25;
-                if(*salud4 > 100)
-                    *salud4 = 100;
-            }
-            printf("%i", *salud4);
 
-        }
-        else{
-            printf("Tu salud está al maximo o no tienes suficiente alimento\n");
-        }
-        break;
-        case 1:
-        break;
-    case 2:
-        if(Ncajones[0] > 0){
-        mochila = agarrar(mochila);
-        Ncajones[0]--;
-        }
-        else{
-            printf("No quedan cajones para abrir");
-        }
-        break;
-    }
-
-    return (objetos) {mochila.palo, mochila.cinta, mochila.cristal, mochila.chocolate, mochila.piedra, mochila.hacha, mochila.cuchillo, mochila.martillo};;
-    }*/
-
-void zombies(objetos mochila,int i, int *salud5, int *v2) // METER VENTANAS Y SALUD.
+void zombies(objetos mochila,int i, int *salud5) // METER VENTANAS Y SALUD.
 {
-    v2 = &Nventanas[i];
     int vidazombie = rand() % (51) + 50 ;
-    if(*v2 > 0)
+    if(Nventanas[i] > 0)
     {
         int r = rand() % 1;
     if(r == 0){
