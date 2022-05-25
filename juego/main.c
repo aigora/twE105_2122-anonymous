@@ -33,7 +33,7 @@ objetos cajones(objetos cajon);
 objetos agarrar(objetos mochila);
 objetos cofre(objetos mochila);
 objetos jardin(objetos mochila, int *salud4);
-void zombies(objetos mochila,int i, int *salud5);
+objetos zombies(objetos mochila,int i, int *salud5);
 
 
 //void ventanaycajones();
@@ -268,7 +268,7 @@ objetos jardin(objetos mochila, int *salud4){   //METER VARIABLES GLOBALES VENTA
         }*/
         break;
     }
-    zombies(mochila, ventanasjardin, &*salud4);
+    mochila = zombies(mochila, ventanasjardin, &*salud4);
 
     return (objetos) {mochila.palo, mochila.cinta, mochila.cristal, mochila.chocolate, mochila.piedra, mochila.hacha, mochila.cuchillo, mochila.martillo};;
     }
@@ -339,7 +339,7 @@ objetos carpinteria(objetos mochila, int *salud6){ // METER VARIABLES GLOBALES V
         }
         break;
     }
-    zombies(mochila, ventanascarpinteria, &*salud6);
+    mochila = zombies(mochila, ventanascarpinteria, &*salud6);
 
     return (objetos) {mochila.palo, mochila.cinta, mochila.cristal, mochila.chocolate, mochila.piedra, mochila.hacha, mochila.cuchillo, mochila.martillo};;
 }
@@ -594,7 +594,7 @@ objetos cofre(objetos mochila)//cambiar para que te de un numero de la clave.
 }*/
 
 
-void zombies(objetos mochila,int ventanas, int *salud5) // METER VENTANAS Y SALUD.
+objetos zombies(objetos mochila,int ventanas, int *salud5) // METER VENTANAS Y SALUD.
 {
     int i = 0;
     int vidazombie = rand() % (51) + 50 ;
@@ -666,5 +666,6 @@ void zombies(objetos mochila,int ventanas, int *salud5) // METER VENTANAS Y SALU
     }
 
     }
+    return (objetos) {mochila.palo, mochila.cinta, mochila.cristal, mochila.chocolate, mochila.piedra, mochila.hacha, mochila.cuchillo, mochila.martillo};
 
 }
