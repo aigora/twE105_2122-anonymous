@@ -915,7 +915,7 @@ char oponenteDe(char jugador)
 // Imprime algo que el CPU "dice"
 void hablar(char *mensaje, char jugador)
 {
-    printf("\nCPU (%c) dice: %s\n\n", jugador, mensaje);
+    printf("\nMetalhead (%c) dice: %s\n\n", jugador, mensaje);
 }
 
 // Debería llamarse después de verificar si alguien gana
@@ -1080,7 +1080,7 @@ void elegirCoordenadasCpu(char jugador, char tablero[FILAS][COLUMNAS], int *yDes
     coordenadasParaGanar(jugador, tablero, &y, &x);
     if (y != -1 && x != -1)
     {
-        hablar("Ganar", jugador);
+        hablar("Voy a ganar jajajajaja.", jugador);
         *yDestino = y;
         *xDestino = x;
         return;
@@ -1099,14 +1099,14 @@ void elegirCoordenadasCpu(char jugador, char tablero[FILAS][COLUMNAS], int *yDes
     coordenadasParaMayorPuntaje(oponente, tablero, &y, &x, &conteoOponente);
     if (conteoOponente > conteoJugador)
     {
-        hablar("Tomar puntaje mayor del oponente", jugador);
+        hablar("Tomaré tu mayor puntaje.", jugador);
         *yDestino = y;
         *xDestino = x;
         return;
     }
     else
     {
-        hablar("Tomar mi mayor puntaje", jugador);
+        hablar("Tomaré mi mayor puntaje", jugador);
         *yDestino = y;
         *xDestino = x;
         return;
@@ -1140,7 +1140,7 @@ char jugadorAleatorio()
 // Loop principal del juego
 int iniciarJuego(int modo)
 {
-    if (modo != JUGADOR_JUGADOR && modo != JUGADOR_CPU && modo != CPU_CPU)
+    if (modo != JUGADOR_CPU)
     {
         printf("Modo de juego no permitido");
         return;
@@ -1160,16 +1160,16 @@ int iniciarJuego(int modo)
     while (1)
     {
         imprimirTablero(tablero);
-        if (modo == JUGADOR_JUGADOR || (modo == JUGADOR_CPU && jugadorActual == JUGADOR_X))
+        if(modo == JUGADOR_CPU && jugadorActual == JUGADOR_X)
         {
-            printf("Jugador %c. Ingresa coordenadas (x,y) para colocar la pieza separadas por una coma. Por ejemplo: 5,5\n", jugadorActual);
+            printf("Tú (%c). Ingresa coordenadas (x,y) para colocar la pieza separadas por una coma. Por ejemplo: 5,5\n", jugadorActual);
             scanf("%d,%d", &x, &y);
             // Al usuario se le solicitan números comenzando a contar en 1, pero en los arreglos comenzamos desde el 0
             // así que necesitamos restar uno en ambas variables
             x--;
             y--;
         }
-        else if (modo == CPU_CPU || (modo == JUGADOR_CPU && jugadorActual == JUGADOR_CPU_O))
+        else if (modo == JUGADOR_CPU && jugadorActual == JUGADOR_CPU_O)
         {
             // Si es modo CPU contra CPU o es el turno del CPU, dejamos que las coordenadas las elija
             // el programa
@@ -1202,13 +1202,8 @@ void tresenraya(int *i)
 {
 
     sleep(1);
-    int modo;
-    printf("1. Humano contra humano\n2. Humano contra CPU (El CPU juega como %c)\n3. CPU contra CPU\n4. Salir\nElige: ", JUGADOR_CPU_O);
-    scanf("%d", &modo);
-    if (modo == SALIR)
-    {
-        return 0;
+    int modo,s;
+    printf("Juegas contra METALHEAD (METALHEAD juega como %c).\n ", JUGADOR_CPU_O);
+        modo=2;
+        *i = iniciarJuego(modo);
     }
-    *i = iniciarJuego(modo);
-    return;
-}
