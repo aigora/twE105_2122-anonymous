@@ -26,6 +26,7 @@ void mapa();//L.143
 void salud_(int *salud2);//L.149
 objetos ir(objetos mochila, int *salud);//L.154
 int bano(int salud);//L.189
+objetos dormitorio(objetos mochila, int *salud7);
 objetos carpinteria(objetos mochila, int *salud6);//L.212
 objetos crear(objetos mochila);//L.240
 objetos cajones(objetos cajon);
@@ -339,23 +340,23 @@ objetos carpinteria(objetos mochila, int *salud6){ // METER VARIABLES GLOBALES V
 }
 
 objetos dormitorio(objetos mochila, int *salud7){
-    int ventanascarpinteria, eleccion;
-    ventanascarpinteria = rand() % (2) +1;
-    cajonescarpinteria = rand() % (2) + 1;
-    printf("Hay %i cajones\n", cajonescarpinteria);
-    printf("¿Qué quieres hacer?\n[0]Abrir cajones [1]Usar dispensador\n");
+    int cajonesdormitorio, eleccion;
+
+    cajonesdormitorio = rand() % (1) + 1;
+    printf("Hay %i cajones\n", cajonesdormitorio);
+    printf("¿Qué quieres hacer?\n[1]Abrir cajones [2]Usar dispensador\n");
     scanf("%i", &eleccion);
     switch(eleccion){
     case 1:
-        if(cajonescarpinteria > 0){
+        if(cajonesdormitorio > 0){
         mochila = agarrar(mochila);
-        cajonescarpinteria--;
+        cajonesdormitorio--;
         }
         else{
             printf("No quedan cajones para abrir");
         }
         break;
-    case 2:
+   // case 2:
 
 
 
