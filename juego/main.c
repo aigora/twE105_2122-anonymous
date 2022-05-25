@@ -915,7 +915,7 @@ char oponenteDe(char jugador)
 // Imprime algo que el CPU "dice"
 void hablar(char *mensaje, char jugador)
 {
-    printf("\nMetalhead (%c) dice: %s\n\n", jugador, mensaje);
+    printf("\nEl secuaz (%c) dice: %s\n\n", jugador, mensaje);
 }
 
 // Debería llamarse después de verificar si alguien gana
@@ -1203,7 +1203,7 @@ void tresenraya(int *i)
 
     sleep(1);
     int modo,s;
-    printf("Juegas contra METALHEAD (METALHEAD juega como %c).\n ", JUGADOR_CPU_O);
+    printf("Juegas contra un secuaz de Bowser ( El secuaz juega como %c).\n ", JUGADOR_CPU_O);
         modo=2;
         *i = iniciarJuego(modo);
     }
